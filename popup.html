@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- learned about charset from w3schools -->
+  <meta charset="UTF-8" />
+  <title>Tab Search</title>
+  <!-- google fonts, i copied this from another project -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- this is the top bar -->
+    <div class="header">
+      <div class="logo">
+        <!-- found this triangle symbol on google -->
+        <span class="logo-icon">⌬</span>
+        <span class="logo-text">TabFind</span>
+      </div>
+      <div class="header-meta">
+        <!-- shows how many tabs are open -->
+        <span id="tab-count-badge" class="tab-count">loading...</span>
+        <button id="notes-toggle" class="icon-btn" title="notes">✎</button>
+      </div>
+    </div>
+
+    <!-- search box area -->
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        placeholder="type to search tabs..."
+        autocomplete="off"
+        autofocus
+      />
+      <!-- esc clears it, see popup.js -->
+      <kbd class="search-hint">ESC</kbd>
+    </div>
+
+    <!-- filter buttons -->
+    <!-- i copied this pill button idea from a youtube tutorial -->
+    <div class="filters">
+      <button class="pill active" data-filter="all">All</button>
+      <button class="pill" data-filter="title">Title</button>
+      <button class="pill" data-filter="url">URL</button>
+      <button class="pill" data-filter="notes">Notes</button>
+    </div>
+
+    <!-- where the tab results go -->
+    <div id="results-wrap" class="results-wrap">
+      <ul id="results-list" class="results-list"></ul>
+
+      <!-- shown when nothing matches -->
+      <div id="empty-state" class="empty-state hidden">
+        <span class="empty-icon">◎</span>
+        <p>nothing found</p>
+      </div>
+    </div>
+
+    <!-- notes thing, hidden by default -->
+    <div id="notes-panel" class="notes-panel hidden">
+      <div class="notes-header">
+        <span id="notes-tab-title" class="notes-tab-title">click a tab first</span>
+        <button id="notes-close" class="icon-btn">✕</button>
+      </div>
+      <!-- textarea for writing notes -->
+      <textarea id="notes-textarea" class="notes-textarea" placeholder="write notes here..."></textarea>
+      <div class="notes-actions">
+        <button id="notes-save" class="btn-save">Save</button>
+        <!-- this button deletes the note -->
+        <button id="notes-delete" class="btn-delete">Delete</button>
+      </div>
+    </div>
+
+    <!-- keyboard shortcuts at the bottom -->
+    <div class="footer">
+      <span><kbd>↑↓</kbd> move</span>
+      <span><kbd>↵</kbd> go to tab</span>
+      <span><kbd>N</kbd> note</span>
+      <span><kbd>Ctrl+Shift+F</kbd> open</span>
+    </div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

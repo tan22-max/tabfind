@@ -1,0 +1,568 @@
+/* popup.css */
+/* i know css is messy, ill clean it up later */
+
+/* reset - found this on css-tricks.com */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* css variables, i learned about these from a yt video */
+:root {
+  --bg: #0d0d0f;
+  --bg2: #13131a;
+  --bg3: #1a1a26;
+  --border: #2a2a3d;
+  --border2: #3a3a55;
+  --accent: #7effc4; /* green color */
+  --accent2: #4fd1ff; /* blue color */
+  --danger: #ff6b6b; /* red for close button */
+  --text: #e8e8f0;
+  --muted: #6b6b8a; /* gray text */
+  --highlight: rgba(126,255,196,0.12);
+  --font-ui: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --radius: 8px;
+  --popup-w: 600px; /* width of the popup */
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  width: var(--popup-w);
+  min-height: 480px;
+  max-height: 620px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 480px;
+  max-height: 620px;
+}
+
+/* ========= HEADER ========= */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  flex-shrink: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  font-size: 1.3rem;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* gradient text effect i found on codepen */
+.logo-text {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* the little "42 tabs" badge */
+.tab-count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  background: var(--bg3);
+  padding: 3px 8px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+/* small icon buttons like the notes and close buttons */
+.icon-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.icon-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--highlight);
+}
+
+/* ========= SEARCH BOX ========= */
+
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  flex-shrink: 0;
+}
+
+.search-icon {
+  color: var(--muted);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.97rem;
+  font-weight: 500;
+  caret-color: var(--accent);
+}
+
+.search-input::placeholder {
+  color: var(--muted);
+}
+
+.search-hint {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 5px;
+  opacity: 0.6;
+}
+
+/* ========= FILTER PILLS ========= */
+
+.filters {
+  display: flex;
+  gap: 6px;
+  padding: 10px 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.pill {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.pill:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+/* active pill is the selected filter */
+.pill.active {
+  background: var(--highlight);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ========= RESULTS LIST ========= */
+
+.results-wrap {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 6px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* custom scrollbar for chrome - looks nicer */
+.results-wrap::-webkit-scrollbar { width: 4px; }
+.results-wrap::-webkit-scrollbar-track { background: transparent; }
+.results-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.results-list {
+  list-style: none; /* remove the bullet points */
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* each tab row */
+.tab-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.1s;
+  position: relative;
+  animation: slideIn 0.15s ease both; /* slides in when first rendered */
+}
+
+.tab-item:hover,
+.tab-item.focused {
+  background: var(--bg3);
+  border-color: var(--border);
+}
+
+/* the green border when focused with keyboard */
+.tab-item.focused {
+  border-color: var(--accent);
+  background: var(--highlight);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-favicon {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* fallback if favicon doesnt load */
+.tab-favicon-placeholder {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+  color: var(--muted);
+}
+
+.tab-info {
+  flex: 1;
+  min-width: 0; /* this fixes overflow issues with flex, learned this from SO */
+}
+
+.tab-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* shows ... when title is too long */
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.tab-url {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+/* note preview below the url */
+.tab-note-preview {
+  font-size: 0.68rem;
+  color: var(--accent);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+  opacity: 0.8;
+}
+
+/* the note and close buttons on the right side */
+.tab-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0; /* hidden by default, shows on hover */
+  transition: opacity 0.1s;
+  flex-shrink: 0;
+}
+
+.tab-item:hover .tab-actions,
+.tab-item.focused .tab-actions {
+  opacity: 1;
+}
+
+.action-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 5px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s;
+}
+
+.action-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--highlight);
+}
+
+/* note button turns green if the tab already has a note */
+.action-btn.note-btn.has-note {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* close button turns red on hover */
+.action-btn.close-btn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: rgba(255,107,107,0.1);
+}
+
+/* highlighted match characters */
+.match-highlight {
+  background: rgba(126,255,196,0.25);
+  color: var(--accent);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* ========= EMPTY STATE ========= */
+/* shown when no tabs match the search */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 50px 20px;
+  color: var(--muted);
+}
+
+.empty-icon {
+  font-size: 2rem;
+  opacity: 0.4;
+}
+
+.empty-state p {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  opacity: 0.6;
+}
+
+/* utility class to hide things */
+.hidden {
+  display: none !important; /* using !important so it always wins */
+}
+
+/* ========= NOTES PANEL ========= */
+
+/* slides up from the bottom */
+.notes-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10; /* make sure it's on top */
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notes-tab-title {
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 450px;
+}
+
+.notes-textarea {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 10px;
+  resize: none;
+  height: 80px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+
+.notes-textarea:focus {
+  border-color: var(--accent); /* green border when typing */
+}
+
+.notes-textarea::placeholder {
+  color: var(--muted);
+}
+
+.notes-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* save button (green) */
+.btn-save {
+  background: var(--accent);
+  border: none;
+  color: #0d0d0f; /* dark text on light background */
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn-save:hover {
+  opacity: 0.85;
+}
+
+/* delete/clear button */
+.btn-delete {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--danger);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-delete:hover {
+  background: rgba(255,107,107,0.1);
+  border-color: var(--danger);
+}
+
+/* ========= FOOTER ========= */
+/* keyboard shortcuts hint bar at the bottom */
+
+.footer {
+  display: flex;
+  gap: 14px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+  flex-shrink: 0;
+}
+
+.footer span {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  padding: 1px 4px;
+  color: var(--text);
+}
+
+/* little vertical line on the left side of the currently active tab */
+.tab-item.active-tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 60%;
+  background: var(--accent2);
+  border-radius: 2px;
+}
